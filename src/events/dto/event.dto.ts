@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { IsDate, IsNumber, IsString, Length, MaxLength } from "class-validator";
+import { IsDate, IsNumber, IsString, Length, MaxLength, IsDateString } from "class-validator";
 
 export class EventDto {
 
@@ -13,7 +13,7 @@ export class EventDto {
     @IsString({message:'Please Enter string'})
     readonly description: string;
 
-    @IsString({message:'Please Enter string'})
+    @IsDateString()
     readonly when: string;
 
     @IsString({message:'Please Enter string'}) 

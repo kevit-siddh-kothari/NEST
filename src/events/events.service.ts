@@ -1,13 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Scope } from '@nestjs/common';
 import { EventEntity } from './entity/event.entity';
 import { UpdateEventDto } from './dto/event-update.dto';
 import { EventRepository } from './event.repository';
 
-@Injectable()
+@Injectable({
+  scope: Scope.REQUEST
+})
 export class EventsService {
 
   constructor(private eventRepo: EventRepository) {
-     
+     console.log(`event module initialised for new request`);
   }
 
   public async AddEvents(event) {
@@ -27,6 +29,7 @@ export class EventsService {
     return await this.eventRepo.deleteEventById(id);
   }
 
+  
   public async updateEventById(updatedEvent, id1: number) {
     return await this.eventRepo.updateEventById(updatedEvent, id1);
   }

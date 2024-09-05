@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Inject, Param, ParseIntPipe, Patch, Post, Req, Res } from '@nestjs/common';
 import { EventsService } from './events.service';
 import {EventDto} from './dto/event.dto';
 import {UpdateEventDto} from './dto/event-update.dto';
@@ -9,8 +9,8 @@ import { Response } from 'express';
 @Controller('/app')
 export class EventsController {
    
-    constructor( private eventService:EventsService ){
-            
+    constructor( @Inject('SERVICE') private eventService:EventsService ){
+        console.log(`Controller initialised !`);
     }
 
     @Get('/events')
@@ -31,7 +31,7 @@ export class EventsController {
 
     @Get('/events/:id')
     @HttpCode(200)
-    public async getEventsById(@Param('id') id:number , @Res() res:Response):Promise<void>{ 
+    public async getEventsById(@Param('id', new ParseIntPipe({errorHttpStatusCode: HttpStatus.BAD_REQUEST})) id:number , @Res() res:Response):Promise<void>{ 
         const event: EventEntity = await this.eventService.findEventsById(id);
         res.status(200).json(event);
     };

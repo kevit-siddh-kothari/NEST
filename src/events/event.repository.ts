@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 export class EventRepository {
   constructor( @InjectRepository(EventEntity)
-    private eventRep: Repository<EventEntity>
+  private eventRep: Repository<EventEntity>
 ) {}
 
   public async AddEvent(event){
